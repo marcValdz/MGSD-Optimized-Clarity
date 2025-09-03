@@ -4,7 +4,7 @@ This mod provides a **graphics tuning overhaul** for Metal Gear Solid Δ: Snake 
 
 In the vanilla game, **Low settings have lazy implementations** — they simply disable features outright instead of offering optimized alternatives. For example, disabling shadows or ambient occlusion entirely rather than using cheaper non-RT methods.  
 
-This mod reworks scalability groups to **preserve visual quality while still reducing GPU load**, ensuring that each setting tier offers meaningful performance savings without turning the game into a downgraded mess.
+This mod reworks scalability groups to **preserve visual quality while still reducing GPU load**, ensuring that each setting tier offers meaningful image quality for the performance it provides.
 
 ---
 
@@ -18,22 +18,18 @@ This mod reworks scalability groups to **preserve visual quality while still red
 - **Shadow Quality Revamp**  
   - Low now uses **traditional shadow maps**.  
   - Medium–Ultra utilize **Virtual Shadow Maps (VSM)**.  
-  - Fog scalability tied to Shadow Quality for consistency.
 
 - **Global Illumination & Ambient Occlusion**  
   - Restores **DFAO (Distance Field AO)** as a fallback when Lumen is disabled.  
-  - Balances performance with **Software Lumen** and **Hardware Lumen** presets.  
   - SSAO properly stacks with Lumen at higher quality levels.
 
 - **Texture Quality Improvements**  
   - Adjusts **MipMapBias** and **Anisotropic Filtering** per quality level.
 
 - **Reflections & SSR Adjustments**  
-  - Low disables SSR; Medium enables Half-Res; High/Ultra use Full-Res.
+  - Improved SSR quality.
 
 - **Other Fixes**  
-  - Proper **View Distance scaling** that affects foliage/NPCs.  
-  - Balanced **Foliage and Shading quality** to match cinematic settings.  
   - Adjusted **Motion Blur** so cutscenes remain cinematic while gameplay is cleaner.
 
 ---
@@ -41,22 +37,22 @@ This mod reworks scalability groups to **preserve visual quality while still red
 ## 📊 Quality Level Breakdown
 
 ### Shadows
-- **Low** → Shadow maps (512px, 1 cascade), Volumetric Fog off  
-- **Medium** → Shadow maps (1024px, 4 cascades), Volumetric Fog enabled (16–64)  
-- **High** → VSM on, higher fidelity fog (16–128)  
-- **Ultra** → VSM on, cinematic fog (8–128)
+- **Low** → Shadow maps (512px, 1 cascade)  
+- **Medium** → Shadow maps (1024px, 3 cascades)  
+- **High** → VSM 4x  
+- **Ultra** → VSM 8x  
 
 ### Global Illumination
 - **Low** → DFAO only  
-- **Medium** → Software Lumen, 48x Downsample  
-- **High** → Hardware Lumen, 24x Downsample  
-- **Ultra** → Hardware Lumen, 12x Downsample   
+- **Medium** → Lumen, 64x Downsample + ShortRangeAO  
+- **High** → Lumen, 32x Downsample + ShortRangeAO  
+- **Ultra** → Lumen, 32x Downsample + DiffuseIndirect.SSAO   
 
 ### Textures
-- **Low** → MipBias +2, Aniso x4  
-- **Medium** → MipBias +1, Aniso x8  
-- **High** → MipBias 0, Aniso x8  
-- **Ultra** → MipBias –1, Aniso x16  
+- **Low** → MipBias +1, Aniso x4  
+- **Medium** → MipBias 0, Aniso x8  
+- **High** → MipBias -1, Aniso x8  
+- **Ultra** → MipBias –2, Aniso x16  
 
 
 ---
@@ -66,4 +62,3 @@ This mod reworks scalability groups to **preserve visual quality while still red
 - **Antialiasing Method is locked** by the game (`r.AntialiasingMethod=4`).  
   - Can only be overridden via **Engine.ini edits** or CLI commands.  
 - **Texture PoolSize is capped at 2000**, likely due to engine-side restrictions.  
-- Some **NPC/foliage quirks** occur if ViewDistance is pushed too far.
